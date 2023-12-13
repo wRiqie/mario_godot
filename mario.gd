@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var SPEED = 300.0
+@export var RUNFACTOR = 2.0
 @export var JUMP_VELOCITY = -400.0
 
 var isJumping = false
@@ -14,7 +15,7 @@ func _physics_process(delta):
 	isJumping = not is_on_floor()
 	isRunning = Input.is_action_pressed("run")
 	
-	var speed = SPEED if not isRunning else SPEED + 100
+	var speed = SPEED if not isRunning else SPEED * RUNFACTOR
 	
 	# Add the gravity.
 	if not is_on_floor():
