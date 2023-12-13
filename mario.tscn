@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2fqxwybyg1yw"]
+[gd_scene load_steps=16 format=3 uid="uid://d2fqxwybyg1yw"]
 
 [ext_resource type="Script" path="res://mario.gd" id="1_h4cj6"]
 [ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Tiles/mario.png" id="1_wwb51"]
+[ext_resource type="AudioStream" uid="uid://dwgj11svxocu5" path="res://Songs/jump.wav" id="3_dr7mr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqe81"]
 atlas = ExtResource("1_wwb51")
@@ -103,9 +104,13 @@ animations = [{
 radius = 7.0
 height = 28.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kabwh"]
+radius = 7.0
+height = 28.0
+
 [node name="Mario" type="CharacterBody2D"]
 position = Vector2(573, 314)
-collision_mask = 8
+collision_mask = 10
 script = ExtResource("1_h4cj6")
 SPEED = 80.0
 RUNFACTOR = 2.2
@@ -117,3 +122,12 @@ animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ev677")
+
+[node name="jumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dr7mr")
+volume_db = -6.559
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_kabwh")

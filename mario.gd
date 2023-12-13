@@ -1,24 +1,36 @@
 extends CharacterBody2D
 
+signal playerDead()
+
 @export var SPEED = 300.0
 @export var RUNFACTOR = 2.0
 @export var JUMP_VELOCITY = -400.0
 
 var isJumping = false
 var isRunning = false
+var isDead = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _physics_process(delta):
+	handle_move(delta)
+	for i in range(get_slide_collision_count() - 1):
+		var collision = get_slide_collision(i)
+		print(collision.get_collider().name)
+		if collision.get_collider().name == "Turtle" and not isDead:
+			print("dead")
+			playerDead.emit()
+	
+func handle_move(delta):
 	isJumping = not is_on_floor()
 	isRunning = Input.is_action_pressed("run")
 	
 	var speed = SPEED if not isRunning else SPEED * RUNFACTOR
 	
 	# Add the gravity.
-	if not is_on_floor():
+	if isJumping:
 		velocity.y += gravity * delta
 		if isRunning and velocity.x != 0:
 			$AnimatedSprite2D.play("running_jump")
@@ -29,6 +41,7 @@ func _physics_process(delta):
 		
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		$jumpSound.play()
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -46,3 +59,4 @@ func _physics_process(delta):
 		$AnimatedSprite2D.play("idle")
 
 	move_and_slide()
+

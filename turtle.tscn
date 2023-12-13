@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://digsoe1c0od3y"]
+
+[ext_resource type="Script" path="res://turtle.gd" id="1_j8fui"]
+[ext_resource type="Texture2D" uid="uid://bflqbnbu3iqr4" path="res://Tiles/enemies.png" id="1_ry7it"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l56q"]
+atlas = ExtResource("1_ry7it")
+region = Rect2(51, 0, 18, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1l5c"]
+atlas = ExtResource("1_ry7it")
+region = Rect2(131, 0, 18, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r63h"]
+atlas = ExtResource("1_ry7it")
+region = Rect2(91, 0, 18, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lx5y0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l56q")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1l5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7r63h")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tt8ks"]
+height = 26.0
+
+[node name="Turtle" type="CharacterBody2D"]
+position = Vector2(230, 114)
+collision_layer = 2
+collision_mask = 9
+safe_margin = 0.001
+script = ExtResource("1_j8fui")
+speed = 50
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3, -3)
+sprite_frames = SubResource("SpriteFrames_lx5y0")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -3)
+shape = SubResource("CapsuleShape2D_tt8ks")
