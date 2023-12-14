@@ -1,8 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2fqxwybyg1yw"]
+[gd_scene load_steps=19 format=3 uid="uid://d2fqxwybyg1yw"]
 
 [ext_resource type="Script" path="res://Scripts/mario.gd" id="1_h4cj6"]
 [ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Art/mario.png" id="1_wwb51"]
 [ext_resource type="AudioStream" uid="uid://dwgj11svxocu5" path="res://Songs/jump.wav" id="3_dr7mr"]
+[ext_resource type="AudioStream" uid="uid://b6h22nufkkupj" path="res://Songs/enemy_damage.wav" id="4_nq4ja"]
+[ext_resource type="AudioStream" uid="uid://cq2tbw6f0r0mt" path="res://Songs/mushroom_picked.wav" id="5_y1x3p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75thm"]
+atlas = ExtResource("1_wwb51")
+region = Rect2(7, 38, 18, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqe81"]
 atlas = ExtResource("1_wwb51")
@@ -42,6 +48,14 @@ region = Rect2(366, 76, 19, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_12b8c"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75thm")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqe81")
@@ -104,9 +118,8 @@ animations = [{
 radius = 7.0
 height = 28.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kabwh"]
-radius = 7.0
-height = 28.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cdlor"]
+radius = 8.0
 
 [node name="Mario" type="CharacterBody2D"]
 position = Vector2(573, 314)
@@ -118,17 +131,27 @@ JUMP_VELOCITY = -350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_12b8c")
-animation = &"idle"
+animation = &"running"
+frame = 1
+frame_progress = 0.282436
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ev677")
 
-[node name="jumpSound" type="AudioStreamPlayer" parent="."]
+[node name="Hitbox" type="Area2D" parent="." groups=["player"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_cdlor")
+debug_color = Color(0.952941, 0, 0.560784, 0.419608)
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nq4ja")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_dr7mr")
 volume_db = -6.559
 
-[node name="Hitbox" type="Area2D" parent="."]
-visible = false
+[node name="MushroomPicked" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_y1x3p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CapsuleShape2D_kabwh")
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

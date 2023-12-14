@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://digsoe1c0od3y"]
+[gd_scene load_steps=9 format=3 uid="uid://digsoe1c0od3y"]
 
 [ext_resource type="Script" path="res://Scripts/turtle.gd" id="1_j8fui"]
 [ext_resource type="Texture2D" uid="uid://bflqbnbu3iqr4" path="res://Art/enemies.png" id="1_ry7it"]
@@ -38,7 +38,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tt8ks"]
+radius = 8.0
 height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dsmgi"]
+radius = 9.0
 
 [node name="Turtle" type="CharacterBody2D"]
 position = Vector2(230, 114)
@@ -54,5 +58,14 @@ sprite_frames = SubResource("SpriteFrames_lx5y0")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, -3)
+position = Vector2(3, -3)
 shape = SubResource("CapsuleShape2D_tt8ks")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(3, -3)
+shape = SubResource("CapsuleShape2D_dsmgi")
+debug_color = Color(0.968627, 0, 0.47451, 0.419608)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

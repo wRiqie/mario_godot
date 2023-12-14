@@ -34,3 +34,8 @@ func get_which_wall_collided():
 			return true
 		elif collision.get_normal().x < 0:
 			return false
+
+
+func _on_hitbox_area_entered(area):
+	if area.global_position.y + 10 < global_position.y:
+		queue_free()
