@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://cp0kbcrdqhsv6"]
+
+[ext_resource type="Texture2D" uid="uid://bflqbnbu3iqr4" path="res://Art/enemies.png" id="1_3kwtq"]
+[ext_resource type="Script" path="res://Scripts/shelled_turtle.gd" id="1_53c6l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aki4e"]
+atlas = ExtResource("1_3kwtq")
+region = Rect2(132, 126, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tifvy"]
+atlas = ExtResource("1_3kwtq")
+region = Rect2(92, 86, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvy1c"]
+atlas = ExtResource("1_3kwtq")
+region = Rect2(132, 86, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tcrl2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aki4e")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tifvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvy1c")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwnpv"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rxyck"]
+size = Vector2(18, 18)
+
+[node name="ShelledTurtle" type="CharacterBody2D"]
+position = Vector2(563, 374)
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_53c6l")
+SPEED = 60.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tcrl2")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_hwnpv")
+
+[node name="HitBox" type="Area2D" parent="." groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_rxyck")
+debug_color = Color(0.968627, 0, 0.458824, 0.419608)
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var SPEED = 400.0
+@export var SPEED = 100.0
 var isMovingLeft = false
 
 func _physics_process(delta):
