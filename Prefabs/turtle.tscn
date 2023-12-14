@@ -50,7 +50,7 @@ collision_layer = 2
 collision_mask = 9
 safe_margin = 0.001
 script = ExtResource("1_j8fui")
-speed = 50
+SPEED = 40.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3, -3)
