@@ -1,11 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://digsoe1c0od3y"]
+[gd_scene load_steps=8 format=3 uid="uid://digsoe1c0od3y"]
 
-[ext_resource type="Script" path="res://Scripts/turtle.gd" id="1_j8fui"]
+[ext_resource type="Script" path="res://Scripts/turtle.gd" id="1_pln7c"]
 [ext_resource type="Texture2D" uid="uid://bflqbnbu3iqr4" path="res://Art/enemies.png" id="1_ry7it"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1l56q"]
-atlas = ExtResource("1_ry7it")
-region = Rect2(51, 0, 18, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q1l5c"]
 atlas = ExtResource("1_ry7it")
@@ -17,14 +13,6 @@ region = Rect2(91, 0, 18, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lx5y0"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1l56q")
-}],
-"loop": true,
-"name": &"spin",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q1l5c")
@@ -48,9 +36,7 @@ radius = 9.0
 position = Vector2(230, 114)
 collision_layer = 2
 collision_mask = 9
-safe_margin = 0.001
-script = ExtResource("1_j8fui")
-SPEED = 40.0
+script = ExtResource("1_pln7c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3, -3)
@@ -67,5 +53,8 @@ shape = SubResource("CapsuleShape2D_tt8ks")
 position = Vector2(3, -3)
 shape = SubResource("CapsuleShape2D_dsmgi")
 debug_color = Color(0.968627, 0, 0.47451, 0.419608)
+
+[node name="shelled_marker" type="Marker2D" parent="."]
+position = Vector2(3, 3)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
