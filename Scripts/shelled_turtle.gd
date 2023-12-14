@@ -22,7 +22,8 @@ func slide_in():
 	move_and_slide()
 	await get_tree().create_timer(1).timeout
 	isSliding = false
-	$AnimatedSprite2D.play("walk")
+	if not isDead: 
+		$AnimatedSprite2D.play("walk")
 	
 
 func _on_hit_box_area_entered(area):
@@ -30,5 +31,7 @@ func _on_hit_box_area_entered(area):
 		isDead = true
 		$AnimatedSprite2D.play("dead")
 		velocity.x = 0
+		give_points(200)
+		remove_child($HitBox)
 		await get_tree().create_timer(1).timeout
 		queue_free()

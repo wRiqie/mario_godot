@@ -57,15 +57,15 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwnpv"]
-size = Vector2(16, 15)
+size = Vector2(16, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxyck"]
 size = Vector2(18, 18)
 
-[node name="ShelledTurtle" type="CharacterBody2D"]
+[node name="ShelledTurtle" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(563, 374)
 collision_layer = 2
-collision_mask = 9
+collision_mask = 8
 script = ExtResource("1_53c6l")
 SPEED = 60.0
 
@@ -76,10 +76,10 @@ frame = 1
 frame_progress = 0.984702
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_hwnpv")
 
-[node name="HitBox" type="Area2D" parent="." groups=["enemy"]]
+[node name="HitBox" type="Area2D" parent="." groups=["enemyHitbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_rxyck")

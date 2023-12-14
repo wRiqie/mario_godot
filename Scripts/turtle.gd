@@ -14,8 +14,9 @@ func handleMove(delta):
 	move_and_slide()
 
 func _on_hitbox_area_entered(area):
-	print("Hitted")
 	if is_stomp(area):
-		print("Stomped")
 		turtle_damaged.emit()
+		give_points(600)
+		$AnimatedSprite2D.visible = false
+		await get_tree().create_timer(0.4).timeout
 		queue_free()

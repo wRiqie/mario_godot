@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://digsoe1c0od3y" path="res://Prefabs/turtle.tscn" id="1_j81ey"]
 [ext_resource type="Script" path="res://Scripts/turtle_pivot.gd" id="1_y40em"]
 
-[node name="TurtlePivot" type="Node2D"]
+[node name="TurtlePivot" type="Node2D" groups=["turtle"]]
 script = ExtResource("1_y40em")
 
 [node name="Turtle" parent="." instance=ExtResource("1_j81ey")]

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal playerDead()
+signal player_dead()
 
 @export var SPEED = 300.0
 @export var RUNFACTOR = 2.0
@@ -62,14 +62,14 @@ func handle_move(delta):
 	move_and_slide()
 	
 func _on_hitbox_area_entered(area):
-	if (area.is_in_group("enemy") or area.is_in_group("deathArea")) and not isDead:
-		if area.global_position.y > global_position.y + 10:
+	if (area.is_in_group("enemyHitbox") or area.is_in_group("deathArea")) and not isDead:
+		if (area.global_position.y > global_position.y + 10) and not area.is_in_group("deathArea"):
 			const BOUNCESPEED = -350
 			velocity.y = BOUNCESPEED
 			$Attack.play()
 		else:
-			playerDead.emit()
 			$AnimatedSprite2D.play("death")
 			isDead = true 
+			player_dead.emit()
 	elif (area.is_in_group("mushroom")):
 		$MushroomPicked.play()

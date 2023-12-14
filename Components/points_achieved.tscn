@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp73urm87vbjs"]
+
+[sub_resource type="Animation" id="Animation_0wmjm"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_ddw0g"]
+resource_name = "up"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -30, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g8i6i"]
+_data = {
+"RESET": SubResource("Animation_0wmjm"),
+"up": SubResource("Animation_ddw0g")
+}
+
+[node name="PointsAchieved" type="Node2D"]
+scale = Vector2(1.0015, 1)
+
+[node name="Points" type="Label" parent="."]
+offset_left = -20.9685
+offset_top = -6.0
+offset_right = 23.0315
+offset_bottom = 12.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 8
+text = "-"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g8i6i")
+}

@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://pi3ca7xra3gh"]
+
+[ext_resource type="FontFile" uid="uid://d0j33gml4hkps" path="res://Art/Super-Mario-World.ttf" id="1_n3hdp"]
+
+[resource]
+base_font = ExtResource("1_n3hdp")
+opentype_features = {
+1667329140: 0
+}
