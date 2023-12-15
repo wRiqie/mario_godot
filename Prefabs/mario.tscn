@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Art/mario.png" id="1_wwb51"]
 [ext_resource type="AudioStream" uid="uid://dwgj11svxocu5" path="res://Songs/jump.wav" id="3_dr7mr"]
 [ext_resource type="AudioStream" uid="uid://b6h22nufkkupj" path="res://Songs/enemy_damage.wav" id="4_nq4ja"]
-[ext_resource type="AudioStream" uid="uid://cq2tbw6f0r0mt" path="res://Songs/mushroom_picked.wav" id="5_y1x3p"]
+[ext_resource type="AudioStream" uid="uid://dftky3f25o0cm" path="res://Songs/power-up.wav" id="5_fkkoh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_75thm"]
 atlas = ExtResource("1_wwb51")
@@ -150,6 +150,6 @@ stream = ExtResource("3_dr7mr")
 volume_db = -6.559
 
 [node name="MushroomPicked" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_y1x3p")
+stream = ExtResource("5_fkkoh")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
