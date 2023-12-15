@@ -29,6 +29,7 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY
 		else:
 			$CollisionShape2D.disabled = true;
+			$Hitbox/CollisionShape2D.disabled = true;
 			velocity.y += (gravity - 350) * delta
 		move_and_slide()
 	

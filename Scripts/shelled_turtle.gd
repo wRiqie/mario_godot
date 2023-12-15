@@ -1,4 +1,4 @@
-extends "res://Scripts/base_enemy.gd"
+extends BaseEnemy
 
 @onready var RayCast = $RayCast
 

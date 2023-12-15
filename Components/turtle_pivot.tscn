@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bag6ig3shuvut"]
+[gd_scene load_steps=3 format=3 uid="uid://b70a5fyu7nxy"]
 
 [ext_resource type="PackedScene" uid="uid://digsoe1c0od3y" path="res://Prefabs/turtle.tscn" id="1_j81ey"]
 [ext_resource type="Script" path="res://Scripts/turtle_pivot.gd" id="1_y40em"]
@@ -8,6 +8,5 @@ script = ExtResource("1_y40em")
 
 [node name="Turtle" parent="." instance=ExtResource("1_j81ey")]
 position = Vector2(-2, 1)
-SPEED = 60.0
 
 [connection signal="turtle_damaged" from="Turtle" to="." method="_on_turtle_turtle_damaged"]

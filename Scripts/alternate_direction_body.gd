@@ -16,6 +16,8 @@ func _physics_process(delta):
 func get_which_wall_collided():
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
+		if collision.get_collider().name == "Mario":
+			return null
 		if collision.get_normal().x > 0:
 			return true
 		elif collision.get_normal().x < 0:

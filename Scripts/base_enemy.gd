@@ -1,4 +1,5 @@
 extends "res://Scripts/alternate_direction_body.gd"
+class_name BaseEnemy
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var pointsAchieved = preload("res://Components/points_achieved.tscn")
@@ -14,9 +15,9 @@ func init_floor_detector():
 	add_child(raycast)
 	
 	var direction = 1 if isMovingLeft else -1
-	raycast.target_position.y = 15
+	raycast.global_position = global_position
+	raycast.target_position.y = floor_detector_size
 	raycast.target_position.x = floor_detector_size * direction
-	raycast.visible = true
 
 func _physics_process(delta):
 	var direction = -1 if isMovingLeft else 1

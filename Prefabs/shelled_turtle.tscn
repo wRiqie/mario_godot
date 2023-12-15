@@ -60,7 +60,7 @@ animations = [{
 size = Vector2(16, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxyck"]
-size = Vector2(18, 18)
+size = Vector2(16, 3)
 
 [node name="ShelledTurtle" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(563, 374)
@@ -82,6 +82,7 @@ shape = SubResource("RectangleShape2D_hwnpv")
 [node name="HitBox" type="Area2D" parent="." groups=["enemyHitbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_rxyck")
 debug_color = Color(0.968627, 0, 0.458824, 0.419608)
 

@@ -1,4 +1,4 @@
-extends "res://Scripts/base_enemy.gd"
+extends BaseEnemy
 
 signal turtle_damaged
 
