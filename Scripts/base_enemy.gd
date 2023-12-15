@@ -3,11 +3,29 @@ extends "res://Scripts/alternate_direction_body.gd"
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var pointsAchieved = preload("res://Components/points_achieved.tscn")
 
+var raycast: RayCast2D
+
 signal enemy_damaged(points: int)
 
-func _physics_process(delta):
-	super._physics_process(delta)
+@export var floor_detector_size = 20
+
+func init_floor_detector():
+	raycast = preload("res://Components/no_floor_identifier.tscn").instantiate()
+	add_child(raycast)
 	
+	var direction = 1 if isMovingLeft else -1
+	raycast.target_position.y = 15
+	raycast.target_position.x = floor_detector_size * direction
+	raycast.visible = true
+
+func _physics_process(delta):
+	var direction = -1 if isMovingLeft else 1
+	raycast.target_position.x = floor_detector_size * direction
+	
+	if not raycast.is_colliding():
+		isMovingLeft = !isMovingLeft
+	super._physics_process(delta)
+		
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
@@ -25,5 +43,3 @@ func _show_points(points: int):
 func give_points(points):
 	enemy_damaged.emit(points)
 	_show_points(points)
-	#await get_tree().create_timer(0.4).timeout
-	#queue_free()

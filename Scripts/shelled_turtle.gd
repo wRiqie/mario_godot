@@ -1,14 +1,20 @@
 extends "res://Scripts/base_enemy.gd"
 
+@onready var RayCast = $RayCast
+
 var isDead = false
 var isSliding = false
 
 func _ready():
+	init_floor_detector()
 	slide_in()
 
 func _physics_process(delta):
 	if not isDead and not isSliding:
 		super._physics_process(delta)
+	elif not is_on_floor():
+		velocity.y += gravity * delta
+		
 	
 	$AnimatedSprite2D.flip_h = not isMovingLeft
 	

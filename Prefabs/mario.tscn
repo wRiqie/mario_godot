@@ -1,10 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://d2fqxwybyg1yw"]
+[gd_scene load_steps=34 format=3 uid="uid://d2fqxwybyg1yw"]
 
 [ext_resource type="Script" path="res://Scripts/mario.gd" id="1_h4cj6"]
 [ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Art/mario.png" id="1_wwb51"]
+[ext_resource type="Texture2D" uid="uid://cnhcr4humoj1c" path="res://Art/s_mario.png" id="3_bb7qn"]
 [ext_resource type="AudioStream" uid="uid://dwgj11svxocu5" path="res://Songs/jump.wav" id="3_dr7mr"]
 [ext_resource type="AudioStream" uid="uid://b6h22nufkkupj" path="res://Songs/enemy_damage.wav" id="4_nq4ja"]
 [ext_resource type="AudioStream" uid="uid://dftky3f25o0cm" path="res://Songs/power-up.wav" id="5_fkkoh"]
+[ext_resource type="AudioStream" uid="uid://cjyxigv2561qr" path="res://Songs/power-up_appears.wav" id="7_rt8t5"]
+[ext_resource type="AudioStream" uid="uid://dtf1itykhh07c" path="res://Songs/smw_pipe.wav" id="8_cayeq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_75thm"]
 atlas = ExtResource("1_wwb51")
@@ -37,6 +40,38 @@ region = Rect2(247, 156, 18, 28)
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0ogj"]
 atlas = ExtResource("1_wwb51")
 region = Rect2(326, 157, 19, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7coe"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(122, 7, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vit1"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(4, 9, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkicj"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(105, 6, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dldct"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(258, 9, 15, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p81hs"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(275, 9, 15, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghm0p"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(293, 8, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajs30"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(4, 9, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsf51"]
+atlas = ExtResource("3_bb7qn")
+region = Rect2(21, 9, 15, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l66u3"]
 atlas = ExtResource("1_wwb51")
@@ -104,6 +139,60 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_j7coe")
+}],
+"loop": true,
+"name": &"s_falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vit1")
+}],
+"loop": true,
+"name": &"s_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkicj")
+}],
+"loop": true,
+"name": &"s_jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dldct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p81hs")
+}],
+"loop": true,
+"name": &"s_running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghm0p")
+}],
+"loop": true,
+"name": &"s_running_jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajs30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsf51")
+}],
+"loop": true,
+"name": &"s_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_l66u3")
 }, {
 "duration": 1.0,
@@ -114,12 +203,187 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_bdro7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"s_idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Growing:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Decreasing:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D:shape:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hitbox/CollisionShape2D:shape:height")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [22.0]
+}
+
+[sub_resource type="Animation" id="Animation_i3eqp"]
+resource_name = "decreasing"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"idle", &"s_idle", &"idle", &"s_idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Decreasing:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [28.0, 20.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/CollisionShape2D:shape:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [30.0, 22.0]
+}
+
+[sub_resource type="Animation" id="Animation_8tvya"]
+resource_name = "growing"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"s_idle", &"idle", &"s_idle", &"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Growing:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [20.0, 28.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/CollisionShape2D:shape:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [22.0, 30.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dvwts"]
+_data = {
+"RESET": SubResource("Animation_bdro7"),
+"decreasing": SubResource("Animation_i3eqp"),
+"growing": SubResource("Animation_8tvya")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ev677"]
 radius = 7.0
-height = 28.0
+height = 20.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cdlor"]
 radius = 8.0
+height = 22.0
 
 [node name="Mario" type="CharacterBody2D"]
 position = Vector2(573, 314)
@@ -131,7 +395,12 @@ JUMP_VELOCITY = -350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_12b8c")
-animation = &"running"
+animation = &"s_idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dvwts")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ev677")
@@ -151,5 +420,11 @@ volume_db = -6.559
 
 [node name="MushroomPicked" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_fkkoh")
+
+[node name="Growing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_rt8t5")
+
+[node name="Decreasing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_cayeq")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

@@ -1,15 +1,16 @@
 extends Node2D
 
-const TURTLE_SCENE = preload("res://Components/turtle_pivot.tscn")
-const MUSHROOM_SCENE = preload("res://Prefabs/mushroom.tscn")
-
-@onready var pointsLabel = $CanvasLayer/Points
-@onready var lifesLabel = $CanvasLayer/Character/LifeAmount
-@onready var coinsLabel = $CanvasLayer/CoinsAmount
+@onready var pointsLabel = $HUD/Points
+@onready var lifesLabel = $HUD/Character/LifeAmount
+@onready var coinsLabel = $HUD/CoinsAmount
 
 var lifes = 5
 var totalPoints = 0
 var coins = 0
+
+var isPlayerDead = false
+
+var isPaused = false
 
 func _ready():
 	pointsLabel.text = str(totalPoints)
@@ -17,16 +18,12 @@ func _ready():
 	coinsLabel.text = str(coins)
 	
 	connect_enemies_signals()
+	connect_lucky_blocks_signals()
 	connect_turtles()
 	
-func _on_mario_player_dead():
-	$Background.stop()
-	$DeathSound.play()
-
-func _on_button_pressed():
-	var instance = TURTLE_SCENE.instantiate()
-	add_child(instance)
-	instance.global_position = $Marker2D.global_position
+func _process(delta):
+	if not isPlayerDead:
+		$Camera.global_position = $Mario.global_position
 	
 func connect_turtles():
 	for enemy in get_tree().get_nodes_in_group("turtle"):
@@ -36,8 +33,36 @@ func connect_enemies_signals():
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if not enemy.enemy_damaged.is_connected(_on_attack_enemy):
 			enemy.enemy_damaged.connect(_on_attack_enemy)
-		
+			
+func connect_lucky_blocks_signals():
+	for block in get_tree().get_nodes_in_group("lucky_block"):
+		if not block.taked_coin.is_connected(_on_taked_coin):
+			block.taked_coin.connect(_on_taked_coin)
+	
+func _on_mario_player_dead():
+	isPlayerDead = true
+	$Background.stop()
+	$DeathSound.play()
+	await get_tree().create_timer(3).timeout
+	remove_child($Mario)
+
 func _on_attack_enemy(points: int):
 	totalPoints += points
 	pointsLabel.text = str(totalPoints)
 	print("Pontos recebidos: ", points, " Total de pontos: ", totalPoints)
+
+func _on_taked_coin():
+	totalPoints += 200
+	coins += 1
+	pointsLabel.text = str(totalPoints)
+	coinsLabel.text = str(coins)
+
+func _on_mario_player_transforming_start():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		enemy.set_physics_process(false)
+
+func _on_mario_player_transforming_finish():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		enemy.set_physics_process(true)
