@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://br4tyymhlddq2"]
+
+[ext_resource type="Texture2D" uid="uid://xwykbo5eciio" path="res://Art/layer1.png" id="1_qjv1j"]
+[ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Art/mario.png" id="3_d740w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pgc2"]
+atlas = ExtResource("3_d740w")
+region = Rect2(207, 76, 18, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5lnd"]
+atlas = ExtResource("3_d740w")
+region = Rect2(329, 115, 16, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l66u3"]
+atlas = ExtResource("3_d740w")
+region = Rect2(326, 76, 19, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taqyl"]
+atlas = ExtResource("3_d740w")
+region = Rect2(366, 76, 19, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xj8bq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pgc2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5lnd")
+}],
+"loop": true,
+"name": &"victory",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l66u3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taqyl")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Congratulations" type="Node2D"]
+
+[node name="BG" type="ParallaxBackground" parent="."]
+
+[node name="Layer" type="ParallaxLayer" parent="BG"]
+motion_mirroring = Vector2(766.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Layer"]
+texture_repeat = 2
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_qjv1j")
+centered = false
+
+[node name="MarioClearStage" type="AnimatedSprite2D" parent="."]
+position = Vector2(2553, 515)
+sprite_frames = SubResource("SpriteFrames_xj8bq")
+animation = &"walk"
+autoplay = "walk"

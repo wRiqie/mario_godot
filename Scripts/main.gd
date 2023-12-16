@@ -12,6 +12,8 @@ var isPlayerDead = false
 
 var isPaused = false
 
+var isStageClear = false
+
 func _ready():
 	pointsLabel.text = str(totalPoints)
 	lifesLabel.text = str(lifes)
@@ -22,7 +24,9 @@ func _ready():
 	connect_turtles()
 	
 func _process(delta):
-	if not isPlayerDead:
+	if isStageClear:
+		$Camera.global_position = $MarioClearStage.global_position
+	elif not isPlayerDead:
 		$Camera.global_position = $Mario.global_position
 	
 func connect_turtles():
@@ -45,6 +49,7 @@ func _on_mario_player_dead():
 	$DeathSound.play()
 	await get_tree().create_timer(3).timeout
 	remove_child($Mario)
+	await get_tree().reload_current_scene()
 
 func _on_attack_enemy(points: int):
 	totalPoints += points
@@ -66,3 +71,14 @@ func _on_mario_player_transforming_finish():
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		enemy.set_physics_process(true)
+
+
+func _on_clear_trigger_area_entered(area):
+	if area.is_in_group("player"):
+		remove_child($Mario)
+		isStageClear = true
+		$Anim.play("clear_stage")
+
+
+func _on_anim_animation_finished(anim_name):
+	pass # Replace with function body.

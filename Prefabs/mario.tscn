@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://d2fqxwybyg1yw"]
+[gd_scene load_steps=35 format=3 uid="uid://d2fqxwybyg1yw"]
 
 [ext_resource type="Script" path="res://Scripts/mario.gd" id="1_h4cj6"]
 [ext_resource type="Texture2D" uid="uid://d24mn34nh4jah" path="res://Art/mario.png" id="1_wwb51"]
@@ -72,6 +72,10 @@ region = Rect2(4, 9, 14, 20)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bsf51"]
 atlas = ExtResource("3_bb7qn")
 region = Rect2(21, 9, 15, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5lnd"]
+atlas = ExtResource("1_wwb51")
+region = Rect2(329, 115, 16, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l66u3"]
 atlas = ExtResource("1_wwb51")
@@ -189,6 +193,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"s_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5lnd")
+}],
+"loop": true,
+"name": &"victory",
 "speed": 5.0
 }, {
 "frames": [{
