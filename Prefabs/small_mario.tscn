@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bqybn7w6eqk4y"]
+[gd_scene load_steps=24 format=3 uid="uid://bqybn7w6eqk4y"]
 
 [ext_resource type="Script" path="res://Scripts/small_mario.gd" id="1_bv3jb"]
 [ext_resource type="Texture2D" uid="uid://cnhcr4humoj1c" path="res://Art/s_mario.png" id="1_pfa5r"]
@@ -7,7 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://dwgj11svxocu5" path="res://Songs/jump.wav" id="4_svsas"]
 [ext_resource type="AudioStream" uid="uid://dftky3f25o0cm" path="res://Songs/power-up.wav" id="5_eyj85"]
 [ext_resource type="AudioStream" uid="uid://cjyxigv2561qr" path="res://Songs/power-up_appears.wav" id="6_0m4s2"]
-[ext_resource type="AudioStream" uid="uid://dtf1itykhh07c" path="res://Songs/smw_pipe.wav" id="7_6llvn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pgc2"]
+atlas = ExtResource("2_j5xqw")
+region = Rect2(207, 76, 18, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_75thm"]
 atlas = ExtResource("2_j5xqw")
@@ -47,6 +50,14 @@ region = Rect2(21, 9, 15, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mebuj"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pgc2")
+}],
+"loop": true,
+"name": &"big_idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_75thm")
@@ -110,6 +121,67 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_ajjkh"]
+resource_name = "growing"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"idle", &"big_idle", &"idle", &"big_idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Growing:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_gnlhj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Growing:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7jdm8"]
+_data = {
+"RESET": SubResource("Animation_gnlhj"),
+"growing": SubResource("Animation_ajjkh")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gk5s5"]
 radius = 7.0
 height = 20.0
@@ -125,6 +197,11 @@ script = ExtResource("1_bv3jb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mebuj")
 animation = &"idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7jdm8")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_gk5s5")
@@ -147,8 +224,5 @@ stream = ExtResource("5_eyj85")
 
 [node name="Growing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_0m4s2")
-
-[node name="Decreasing" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_6llvn")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

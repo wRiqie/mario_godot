@@ -35,11 +35,10 @@ func handle_damage():
 	isDead = true
 	player_dead.emit()
 
-func handle_transforming(isGrowing: bool):
+func handle_transforming():
 	isTransforming = true
 	player_transforming_start.emit()
-	#TODO trocar player
-	$AnimationPlayer.play("growing" if isGrowing else "decreasing")
+	$AnimationPlayer.play("growing")
 	await get_tree().create_timer(.9).timeout
 	isTransforming = false
 	player_transforming_finish.emit()
@@ -60,3 +59,4 @@ func _on_hitbox_area_entered(area):
 			handle_damage()
 		elif area.is_in_group("mushroom"):
 			$MushroomPicked.play()
+			handle_transforming()
