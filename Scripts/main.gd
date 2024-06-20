@@ -81,4 +81,4 @@ func _on_clear_trigger_area_entered(area):
 
 
 func _on_anim_animation_finished(anim_name):
-	SceneTransition.change_scene("res://Scenes/congratulations.tscn")
+	get_tree().change_scene_to_file("res://Scenes/congratulations.tscn")
